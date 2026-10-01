@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
@@ -9,6 +10,7 @@ class UserModel {
   final String email;
   String phoneNumber;
   String profilePicture;
+  String publicId;
 
   UserModel({
     required this.id,
@@ -18,6 +20,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.profilePicture,
+    this.publicId = '',
   });
 
   /// Helper Function to get the full name
@@ -52,6 +55,7 @@ class UserModel {
     profilePicture: "",
   );
 
+  /// Firestore keys stay capitalized so they match existing documents
   Map<String, dynamic> toJson() {
     return {
       'FirstName': firstName,
@@ -60,6 +64,7 @@ class UserModel {
       'Email': email,
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture,
+      'publicId': publicId,
     };
   }
 
@@ -76,6 +81,7 @@ class UserModel {
         email: data['Email'] ?? '',
         phoneNumber: data['PhoneNumber'] ?? '',
         profilePicture: data['ProfilePicture'] ?? '',
+        publicId: data['publicId'] ?? '',
       );
     } else {
       return UserModel.empty();

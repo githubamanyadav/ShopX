@@ -1,7 +1,9 @@
+import 'package:e_commerce/data/repository/user/user_repository.dart';
 import 'package:e_commerce/features/authentication/screens/login/login_screen.dart';
 import 'package:e_commerce/features/authentication/screens/onboarding/on_boarding.dart';
 
 import 'package:e_commerce/features/authentication/screens/signup/email_verify.dart';
+import 'package:e_commerce/features/personalization/screens/controller/user_controller.dart';
 import 'package:e_commerce/navigation_menu.dart';
 import 'package:e_commerce/utils/exception/firebase_auth_exception.dart';
 import 'package:e_commerce/utils/exception/firebase_exceptions.dart';
@@ -18,9 +20,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
-  final _auth = FirebaseAuth.instance;
 
+  //vairables needed in the starting of the app
+  //
+  final _auth = FirebaseAuth.instance;
   final localStorage = GetStorage();
+  //this will bring the current login user in the app
+  User? get currentUser => _auth.currentUser;
 
   // this is function will get run just after the main.dart run the authrepository line & this function intialize what ever is in it
   @override
@@ -31,8 +37,6 @@ class AuthenticationRepository extends GetxController {
 
   void screenRedirect() {
     final user = _auth.currentUser;
-
-    // print(user);
 
     if (user != null) {
       if (user.emailVerified) {
@@ -175,6 +179,58 @@ class AuthenticationRepository extends GetxController {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw UFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code);
+    } on FormatException {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code);
+    } catch (e) {
+      throw "something went wrong. please try again";
+    }
+  }
+
+  //delete User account
+  Future<void> deleteAccount() async {
+    try {
+      //this will delete from the fireStore
+      await UserRepository.instance.removeUserRecord(currentUser!.uid);
+
+      //this get the publicId to delete the user image from cloudianry
+      String publicId = UserController.instance.user.value.publicId;
+      //deleting the user from the ucloudinary
+      if (publicId.isNotEmpty) {
+        UserRepository.instance.deleteProfileImage(publicId);
+      }
+      //this will delete user from the authentication provider
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw UFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code);
+    } on FormatException {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code);
+    } catch (e) {
+      throw "something went wrong. please try again";
+    }
+  }
+
+  //
+  Future<void> reauthenticateUserEmailWithPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+
+      await currentUser!.reauthenticateWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       throw UFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

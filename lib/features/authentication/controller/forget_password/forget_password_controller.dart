@@ -16,24 +16,6 @@ class ForgetPasswordController extends GetxController {
   //send email to reset the password
   Future<void> sendPasswordResetEmail() async {
     try {
-      //start loading screen
-      UFullScreenLoader.openLoadingDialog();
-
-      //check internet connection
-      final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected) {
-        //stop loading screen
-        UFullScreenLoader.stopLoading();
-        // error for the internet connection
-        USnackBarHelpers.warningSnackBar(title: "No internet Connection");
-        return;
-      }
-      //form validation
-      if (!forgetPasswordFormKey.currentState!.validate()) {
-        //start loading
-        UFullScreenLoader.stopLoading();
-        return;
-      }
       //reset the email from the repository
       await AuthenticationRepository.instance.sendPasswordResetEmail(
         email.text.trim(),

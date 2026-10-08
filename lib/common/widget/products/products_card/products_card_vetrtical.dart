@@ -2,13 +2,14 @@ import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/style/shadow.dart';
 import 'package:e_commerce/common/widget/icon/circular_icon.dart';
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
-
 import 'package:e_commerce/common/widget/text/brand_title_with_verification_icon.dart';
 import 'package:e_commerce/common/widget/text/product_price_text.dart';
 import 'package:e_commerce/common/widget/text/product_text_title.dart';
+import 'package:e_commerce/features/shop/controller/brands/brands_controller.dart';
+import 'package:e_commerce/features/shop/controller/product/product_controller.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/features/shop/screens/product_details/product_details.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
-import 'package:e_commerce/utils/constants/images.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,21 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UProductsCardVetrtical extends StatelessWidget {
-  const UProductsCardVetrtical({super.key});
+  const UProductsCardVetrtical({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
+    final discount = controller
+        .calculateSalePercentage(product.price, product.salePrice)
+        .toString();
+
     bool dark = UHelperFunction.isDarkMode(context);
     return GestureDetector(
       onTap: () {
-        Get.to(() => ProductDetailScreen());
+        Get.to(() => ProductDetailScreen(product: product));
       },
       child: Container(
         width: 180,
@@ -43,25 +51,29 @@ class UProductsCardVetrtical extends StatelessWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: URoundedImage(imageUrl: UImages.productImage15),
-                  ),
-                  Positioned(
-                    top: 12,
-                    child: URoundedContainer(
-                      radius: USizes.sm,
-                      backgroundColor: UColors.yellow.withValues(alpha: 0.8),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: USizes.sm,
-                        vertical: USizes.xs,
-                      ),
-                      child: Text(
-                        '20%',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.labelLarge!.apply(color: UColors.black),
-                      ),
+                    child: URoundedImage(
+                      imageUrl: product.thumbnail,
+                      isNetworkImage: true,
                     ),
                   ),
+                  if (discount != 'null')
+                    Positioned(
+                      top: 12,
+                      child: URoundedContainer(
+                        radius: USizes.sm,
+                        backgroundColor: UColors.yellow.withValues(alpha: 0.8),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: USizes.sm,
+                          vertical: USizes.xs,
+                        ),
+                        child: Text(
+                          "$discount%",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelLarge!.apply(color: UColors.black),
+                        ),
+                      ),
+                    ),
                   Positioned(
                     right: -5,
                     top: 0,
@@ -83,22 +95,24 @@ class UProductsCardVetrtical extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     UProductTextTitle(
-                      title: "Bata shoes",
+                      title: product.brand!.name,
                       smallSize: true,
                       maxLines: 1,
                     ),
                     SizedBox(height: USizes.xs),
-                    UBrandTitleWithVerifyIcon(title: "Bata"),
+                    UBrandTitleWithVerifyIcon(title: product.title),
                     const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        UProductPriceText(
-                          currentSign: "\$",
-                          price: "61",
-                          maxLines: 1,
-                          isLarge: false,
-                          lineThrough: false,
+                        Flexible(
+                          child: UProductPriceText(
+                            currentSign: "INR",
+                            price: controller.getProductPrice(product),
+                            maxLines: 1,
+                            isLarge: false,
+                            lineThrough: false,
+                          ),
                         ),
                         Container(
                           height: USizes.iconLg * 1.2,

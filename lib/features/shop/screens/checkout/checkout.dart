@@ -2,7 +2,7 @@ import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/style/padding.dart';
 import 'package:e_commerce/common/widget/appbar/app_bar.dart';
 import 'package:e_commerce/common/widget/button/elevated_button.dart';
-import 'package:e_commerce/common/widget/products/cart/cart_item/cart_item.dart';
+
 import 'package:e_commerce/common/widget/screens/success_screen.dart';
 import 'package:e_commerce/common/widget/textfields/promo_code_field.dart';
 import 'package:e_commerce/features/shop/screens/cart/widgets/cart_items.dart';
@@ -10,7 +10,7 @@ import 'package:e_commerce/features/shop/screens/checkout/widgets/amount_billing
 import 'package:e_commerce/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:e_commerce/features/shop/screens/checkout/widgets/billing_payment_section.dart';
 import 'package:e_commerce/navigation_menu.dart';
-import 'package:e_commerce/utils/constants/colors.dart';
+
 import 'package:e_commerce/utils/constants/images.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';
@@ -23,7 +23,6 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = UHelperFunction.isDarkMode(context);
     return Scaffold(
       appBar: UAppBar(showArrowBack: true, title: Text(" Order review")),
 

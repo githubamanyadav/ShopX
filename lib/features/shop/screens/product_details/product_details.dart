@@ -1,23 +1,28 @@
 import 'package:e_commerce/common/style/padding.dart';
 import 'package:e_commerce/common/widget/button/elevated_button.dart';
-import 'package:e_commerce/common/widget/chip/choice_chip.dart';
-import 'package:e_commerce/common/widget/text/section_heading.dart';
+import 'package:e_commerce/features/shop/controller/product/image_controller.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
+
 import 'package:e_commerce/features/shop/screens/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:e_commerce/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:e_commerce/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:e_commerce/features/shop/screens/product_details/widgets/product_thumbnail_slider.dart';
+import 'package:e_commerce/utils/constants/enums.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 
 import 'package:e_commerce/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
+
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  const ProductDetailScreen({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     final dark = UHelperFunction.isDarkMode(context);
+
     return Scaffold(
       /// -----[Body]-----
       body: SingleChildScrollView(
@@ -28,19 +33,21 @@ class ProductDetailScreen extends StatelessWidget {
               child: Column(
                 children: [
                   /// -----[Product Image With Slider]-----
-                  UProductThumbnailAndSlider(dark: dark), // Stack
+                  UProductThumbnailAndSlider(
+                    dark: dark,
+                    product: product,
+                  ), // Stack
                   /// -----[Product Details]-----
                   /// Price, Title, Stock And Brand
-                  UProductMetaData(),
+                  UProductMetaData(product: product),
 
                   ///
-                  UProductAttributes(),
-                  SizedBox(height: USizes.spaceBtwItems),
+                  if (product.productType ==
+                      ProductType.variable.toString()) ...[
+                    UProductAttributes(),
+                    SizedBox(height: USizes.spaceBtwItems),
+                  ],
 
-                  /// Attributes
-                  /// Attributes
-
-                  // Column
                   /// Checkout Button
                   UElevatedButton(onPressed: () {}, child: Text("Check out")),
                   SizedBox(height: USizes.spaceBtwItems),
@@ -48,7 +55,7 @@ class ProductDetailScreen extends StatelessWidget {
                   /// Description
                   ///
                   ReadMoreText(
-                    'This is a product of iPhone 11 with 512 GB, This is a product of iPhone 11 with 512 GB This is a product of iPhone 11 with 512 GB, This is a product of iPhone 11 with 512 GB',
+                    product.description ?? " ",
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: ' Show more',

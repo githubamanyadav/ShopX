@@ -1,9 +1,13 @@
+import 'package:e_commerce/data/repository/product/product_repository.dart';
 import 'package:e_commerce/data/repository/user/user_repository.dart';
+import 'package:e_commerce/dummy_data.dart';
+
 import 'package:e_commerce/features/authentication/screens/login/login_screen.dart';
 import 'package:e_commerce/features/authentication/screens/onboarding/on_boarding.dart';
 
 import 'package:e_commerce/features/authentication/screens/signup/email_verify.dart';
 import 'package:e_commerce/features/personalization/screens/controller/user_controller.dart';
+
 import 'package:e_commerce/navigation_menu.dart';
 import 'package:e_commerce/utils/exception/firebase_auth_exception.dart';
 import 'package:e_commerce/utils/exception/firebase_exceptions.dart';
@@ -22,7 +26,6 @@ class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   //vairables needed in the starting of the app
-  //
   final _auth = FirebaseAuth.instance;
   final localStorage = GetStorage();
   //this will bring the current login user in the app
@@ -30,9 +33,22 @@ class AuthenticationRepository extends GetxController {
 
   // this is function will get run just after the main.dart run the authrepository line & this function intialize what ever is in it
   @override
-  void onReady() {
+  void onReady() async {
     FlutterNativeSplash.remove();
     screenRedirect();
+    //
+    // await Get.put(
+    //   CategoryRepository()
+    // ).uploadBrandCategory(UDummyData.categories);
+
+    //
+    // await Get.put(BannerRepository()).uploadBanners(UDummyData.banner);
+
+    //
+    // await Get.put(BrandRepository()).uploadBrands(UDummyData.brands);
+
+    //
+    // Get.put(ProductRepository()).uploadProducts(UDummyData.products);
   }
 
   void screenRedirect() {

@@ -1,16 +1,23 @@
 import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
 import 'package:e_commerce/common/widget/text/brand_title_with_verification_icon.dart';
+import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
 import 'package:e_commerce/utils/constants/enums.dart';
-import 'package:e_commerce/utils/constants/images.dart';
+
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class UBrandCard extends StatelessWidget {
-  const UBrandCard({super.key, this.showBorder = true, this.onTap});
+  const UBrandCard({
+    super.key,
+    this.showBorder = true,
+    this.onTap,
+    required this.brandModel,
+  });
 
   final bool showBorder;
   final VoidCallback? onTap;
+  final BrandModel brandModel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +34,8 @@ class UBrandCard extends StatelessWidget {
             children: [
               Flexible(
                 child: URoundedImage(
-                  imageUrl: UImages.bataLogo,
-                  isNetworkImage: false, // see issue #2 below
+                  imageUrl: brandModel.image,
+                  isNetworkImage: true, // see issue #2 below
                   backgroundColor: Colors.transparent,
                 ),
               ),
@@ -39,11 +46,11 @@ class UBrandCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     UBrandTitleWithVerifyIcon(
-                      title: "Nike",
+                      title: brandModel.name,
                       brandTextSize: TextSizes.large,
                     ),
                     Text(
-                      "172 products",
+                      "${brandModel.productsCount.toString()} products",
                       style: Theme.of(context).textTheme.labelMedium,
                       overflow: TextOverflow.ellipsis,
                     ),

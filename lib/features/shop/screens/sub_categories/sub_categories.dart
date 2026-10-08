@@ -6,7 +6,7 @@ import 'package:e_commerce/common/widget/products/products_card/product_card_hor
 import 'package:e_commerce/common/widget/text/section_heading.dart';
 
 import 'package:e_commerce/utils/constants/sizes.dart';
-import 'package:e_commerce/utils/helpers/helper_function.dart';
+
 import 'package:flutter/material.dart';
 
 class SubCategories extends StatelessWidget {
@@ -14,7 +14,6 @@ class SubCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = UHelperFunction.isDarkMode(context);
     return Scaffold(
       appBar: UAppBar(
         showArrowBack: true,

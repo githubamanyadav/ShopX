@@ -3,12 +3,15 @@ import 'package:e_commerce/common/widget/products/products_card/products_card_ve
 import 'package:e_commerce/common/widget/text/section_heading.dart';
 import 'package:e_commerce/common/widget/textfields/search_bar.dart';
 import 'package:e_commerce/features/shop/controller/home/home_controller.dart';
+import 'package:e_commerce/features/shop/controller/product/product_controller.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
+
 import 'package:e_commerce/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/home_app_bar.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/primary_header_container.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/product_card_vertical.dart';
-import 'package:e_commerce/utils/constants/images.dart';
+
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +23,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // the
     final controller = Get.put(HomeController());
+    final productController = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -50,15 +54,7 @@ class HomeScreen extends StatelessWidget {
             //slidern carousel
             Padding(
               padding: EdgeInsetsGeometry.all(USizes.defaultSpace),
-              child: UPromotionSlider(
-                banners: [
-                  UImages.homeBanner1,
-                  UImages.homeBanner2,
-                  UImages.homeBanner3,
-                  UImages.homeBanner4,
-                  UImages.homeBanner5,
-                ],
-              ),
+              child: UPromotionSlider(),
             ),
 
             // BannerDotNavigation(pageController: PageController()),
@@ -79,12 +75,16 @@ class HomeScreen extends StatelessWidget {
             //product card vetical
             Padding(
               padding: const EdgeInsets.all(USizes.md),
-              child: UGridLayout(
-                itemCount: 10,
-                itemBuilder: (BuildContext, index) {
-                  return UProductsCardVetrtical();
-                },
-              ),
+              child: Obx(() {
+                return UGridLayout(
+                  itemCount: productController.featuredProducts.length,
+                  itemBuilder: (BuildContext, index) {
+                    ProductModel product =
+                        productController.featuredProducts[index];
+                    return UProductsCardVetrtical(product: product);
+                  },
+                );
+              }),
             ),
             //
           ],

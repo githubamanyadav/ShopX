@@ -1,7 +1,7 @@
 class UTexts {
   UTexts._();
 
-  static const String currency = '\$';
+  static const String currency = '\INR';
 
   static const String onBoardingTitle1 = 'Welcome to UP Store';
   static const String onBoardingTitle2 = 'Shop Everything You Love!';

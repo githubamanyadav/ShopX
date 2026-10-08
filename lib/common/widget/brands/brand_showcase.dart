@@ -1,5 +1,6 @@
 import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/widget/brands/brand_cards.dart';
+import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
 
 import 'package:e_commerce/utils/constants/sizes.dart';
@@ -24,7 +25,7 @@ class UBrandShowcase extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //brand with product count
-          UBrandCard(showBorder: false),
+          UBrandCard(brandModel: BrandModel.empty(), showBorder: false),
 
           //
           Row(

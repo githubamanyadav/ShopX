@@ -1,4 +1,5 @@
 import 'package:e_commerce/common/custom_shapes/circular_container.dart';
+import 'package:e_commerce/common/widget/images/circular_image.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 
@@ -22,21 +23,18 @@ class UVerticalImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool dark = UHelperFunction.isDarkMode(context);
+    // bool dark = UHelperFunction.isDarkMode(context);
     return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [
-          UCircularContainer(
+          UCircularImage(
+            image: image,
+            isNetworkImage: true,
             height: 56,
             width: 56,
-            backgroundColor:
-                backgroundColor ?? (dark ? UColors.dark : UColors.white),
-            child: Padding(
-              padding: const EdgeInsets.all(USizes.sm),
-              child: Image.asset(image, fit: BoxFit.cover),
-            ),
           ),
+
           SizedBox(height: 6),
           //home circular container below text
           SizedBox(

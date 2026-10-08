@@ -1,4 +1,5 @@
 import 'package:e_commerce/bindings/bindings.dart';
+import 'package:e_commerce/routes/app_routes.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
 import 'package:e_commerce/utils/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      getPages: UAppRoutes.screens,
       themeMode: ThemeMode.system,
       theme: UAppTheme.lightTheme,
       darkTheme: UAppTheme.darkTheme,

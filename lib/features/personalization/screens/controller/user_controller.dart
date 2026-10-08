@@ -13,9 +13,9 @@ import 'package:e_commerce/utils/popups/full_screen_loader.dart';
 import 'package:e_commerce/utils/popups/snackbar_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 

@@ -1,6 +1,7 @@
 import 'package:e_commerce/common/style/padding.dart';
 import 'package:e_commerce/common/widget/appbar/app_bar.dart';
 import 'package:e_commerce/common/widget/brands/brand_cards.dart';
+import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
 import 'package:e_commerce/features/shop/screens/all_brands/widgets/sortable_products.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class BrandProductsScreen extends StatelessWidget {
           padding: Upadding.screenPadding,
           child: Column(
             children: [
-              UBrandCard(),
+              UBrandCard(brandModel: BrandModel.empty()),
               SizedBox(height: USizes.spaceBtwSections),
 
               USortableProducts(),

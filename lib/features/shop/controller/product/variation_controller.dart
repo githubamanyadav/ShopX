@@ -33,6 +33,7 @@ class VariationController extends GetxController {
             variation.attributeValues,
             selectedAttributes,
           ),
+          orElse: () => ProductVariationModel.empty(),
         );
 
     // Show the selected variation image as main image
@@ -63,10 +64,37 @@ class VariationController extends GetxController {
     return true;
   }
 
+  /// Check Attribute availability / stock in variation
+  Set<dynamic> getAttributesAvailabilityInVariation(
+    List<ProductVariationModel> variations,
+    String attributeName,
+  ) {
+    // Pass the variations to check which attributes are available and stock is not 0
+    final availableAttributesValues = variations
+        .where(
+          (variation) =>
+              variation.attributeValues[attributeName] != null &&
+              variation.attributeValues[attributeName]!.isNotEmpty &&
+              variation.stock > 0,
+        )
+        .map((variation) => variation.attributeValues[attributeName])
+        .toSet();
+
+    return availableAttributesValues;
+  }
+
   /// Check Product Variation Stock Status
   void getProductVariationStockStatus() {
     variationStockStatus.value = selectedVariation.value.stock > 0
         ? 'In Stock'
         : 'Out of Stock';
+  }
+
+  /// Get Product Variation Price
+  String getVariationPrice() {
+    return (selectedVariation.value.salePrice > 0
+            ? selectedVariation.value.salePrice
+            : selectedVariation.value.price)
+        .toString();
   }
 }

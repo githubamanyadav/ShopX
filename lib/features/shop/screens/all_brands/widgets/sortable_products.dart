@@ -1,36 +1,48 @@
-import 'package:e_commerce/common/widget/brands/brand_cards.dart';
 import 'package:e_commerce/common/widget/layouts/grid_layout.dart';
-import 'package:e_commerce/common/widget/text/section_heading.dart';
-import 'package:e_commerce/features/shop/controller/brands/brands_controller.dart';
-
-import 'package:e_commerce/features/shop/screens/all_brands/brand_products.dart';
+import 'package:e_commerce/common/widget/products/products_card/products_card_vetrtical.dart';
+import 'package:e_commerce/features/shop/controller/product/all_products_controller.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:iconsax/iconsax.dart';
 
 class USortableProducts extends StatelessWidget {
-  const USortableProducts({super.key});
+  const USortableProducts({super.key, required this.product});
+
+  final List<ProductModel> product;
 
   @override
   Widget build(BuildContext context) {
-    final controller = BrandController.instance;
+    final controller = AllProductsController.instance;
+    controller.assignProducts(product);
     return Column(
       children: [
-        USectionHeading(title: "Brands", showActionButton: false),
-        SizedBox(height: USizes.spaceBtwItems),
-        Obx(() {
-          return UGridLayout(
-            itemCount: controller.allBrands.length,
-            itemBuilder: (context, index) => UBrandCard(
-              brandModel: controller.allBrands[index],
-              onTap: () {
-                Get.to(() => BrandProductsScreen());
-              },
-            ),
-            mainAxisExtent: 80,
-          );
-        }),
+        /// Filter Field
+        DropdownButtonFormField(
+          initialValue: controller.selectedSortOption.value,
+          decoration: InputDecoration(prefixIcon: Icon(Iconsax.sort)),
+          onChanged: (value) {
+            if (value != null) {
+              controller.sortProducts(value);
+            }
+          },
+          items: ['Name', 'Lower Price', 'Higher Price', 'Sale', 'Newest'].map((
+            filter,
+          ) {
+            return DropdownMenuItem(value: filter, child: Text(filter));
+          }).toList(),
+        ),
+        SizedBox(height: USizes.spaceBtwSections),
+
+        /// Products
+        Obx(
+          () => UGridLayout(
+            itemCount: controller.products.length,
+            itemBuilder: (context, index) =>
+                UProductsCardVetrtical(product: controller.products[index]),
+          ),
+        ),
       ],
     );
   }

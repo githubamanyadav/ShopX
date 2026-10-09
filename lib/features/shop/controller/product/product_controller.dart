@@ -29,6 +29,18 @@ class ProductController extends GetxController {
     }
   }
 
+  /// Function to get only 4 featured products
+  Future<List<ProductModel>> getAllFeaturedProduct() async {
+    try {
+      List<ProductModel> featuredProducts = await _repository
+          .fetchFeaturedProducts();
+      return featuredProducts;
+    } catch (e) {
+      USnackBarHelpers.errorSnackBar(title: 'Failed!', message: e.toString());
+      return [];
+    }
+  }
+
   //how much sales on a product in %
   String? calculateSalePercentage(double originalPrice, double? salePrice) {
     if (salePrice == null || salePrice <= 0.0) return null;
@@ -73,7 +85,7 @@ class ProductController extends GetxController {
     }
   }
 
-  //\
+  //
   String getStockStatus(int stock) {
     if (stock > 0) return "In Stock";
     return "Out of Stock";

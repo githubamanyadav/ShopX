@@ -65,7 +65,12 @@ class HomeScreen extends StatelessWidget {
               child: USectionHeading(
                 title: "Popular categories",
                 onPressed: () {
-                  Get.to((() => AllProducts()));
+                  Get.to(
+                    (() => AllProductsScreen(
+                      title: "Popular categories",
+                      futureMethod: productController.getAllFeaturedProduct(),
+                    )),
+                  );
                 },
               ),
             ),

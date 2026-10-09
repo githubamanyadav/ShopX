@@ -44,7 +44,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ///
                   if (product.productType ==
                       ProductType.variable.toString()) ...[
-                    UProductAttributes(),
+                    UProductAttributes(product: product),
                     SizedBox(height: USizes.spaceBtwItems),
                   ],
 

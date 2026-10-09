@@ -18,7 +18,7 @@ class AllBrands extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: Upadding.screenPadding,
-          child: USortableProducts(),
+          child: USortableProducts(product: []),
         ),
       ),
     );

@@ -24,7 +24,7 @@ class BrandProductsScreen extends StatelessWidget {
               UBrandCard(brandModel: BrandModel.empty()),
               SizedBox(height: USizes.spaceBtwSections),
 
-              USortableProducts(),
+              USortableProducts(product: []),
             ],
           ), // Column
         ), // Padding

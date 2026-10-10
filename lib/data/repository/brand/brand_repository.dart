@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/data/services/cloudinary_services.dart';
+import 'package:e_commerce/features/shop/models/brand_category/brand_category_model.dart';
 
 import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
 
@@ -80,45 +81,45 @@ class BrandRepository extends GetxController {
   }
 
   // /// [Fetch] - Function to get category specific brands
-  // Future<List<BrandModel>> fetchBrandsForCategory(String categoryId) async {
-  //   try {
-  //     // Query to get all documents where categoryId matches the provided categoryId
-  //     final brandCategoryQuery = await _db
-  //         .collection(Ukeys.brandCategoryCollection)
-  //         .where('categoryId', isEqualTo: categoryId)
-  //         .get();
+  Future<List<BrandModel>> fetchBrandsForCategory(String categoryId) async {
+    try {
+      // Query to get all documents where categoryId matches the provided categoryId
+      final brandCategoryQuery = await _db
+          .collection(Ukeys.brandCategoryCollection)
+          .where('categoryId', isEqualTo: categoryId)
+          .get();
 
-  //     // Convert documents to Model
-  //     List<BrandCategoryModel> brandCategories = brandCategoryQuery.docs
-  //         .map((doc) => BrandCategoryModel.fromSnapshot(doc))
-  //         .toList();
+      // Convert documents to Model
+      List<BrandCategoryModel> brandCategories = brandCategoryQuery.docs
+          .map((doc) => BrandCategoryModel.fromSnapshot(doc))
+          .toList();
 
-  //     // Extract brandIds from BrandCategoryModel
-  //     List<String> brandIds = brandCategories
-  //         .map((brandCategory) => brandCategory.brandId)
-  //         .toList();
+      // Extract brandIds from BrandCategoryModel
+      List<String> brandIds = brandCategories
+          .map((brandCategory) => brandCategory.brandId)
+          .toList();
 
-  //     // Query to get brands based on brandIds
-  //     final brandsQuery = await _db
-  //         .collection(Ukeys.brandsCollection)
-  //         .where(FieldPath.documentId, whereIn: brandIds)
-  //         .limit(2)
-  //         .get();
+      // Query to get brands based on brandIds
+      final brandsQuery = await _db
+          .collection(Ukeys.brandsCollection)
+          .where(FieldPath.documentId, whereIn: brandIds)
+          .limit(2)
+          .get();
 
-  //     // convert documents to model
-  //     List<BrandModel> brands = brandsQuery.docs
-  //         .map((doc) => BrandModel.fromSnapshot(doc))
-  //         .toList();
+      // convert documents to model
+      List<BrandModel> brands = brandsQuery.docs
+          .map((doc) => BrandModel.fromSnapshot(doc))
+          .toList();
 
-  //     return brands;
-  //   } on FirebaseException catch (e) {
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch (_) {
-  //     throw UFormatException();
-  //   } on PlatformException catch (e) {
-  //     throw UPlatformException(e.code).message;
-  //   } catch (e) {
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+      return brands;
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

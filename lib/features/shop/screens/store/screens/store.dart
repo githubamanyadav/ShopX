@@ -7,6 +7,7 @@ import 'package:e_commerce/features/shop/controller/brands/brands_controller.dar
 import 'package:e_commerce/features/shop/controller/category/category_controller.dart';
 
 import 'package:e_commerce/features/shop/screens/all_brands/all_brands.dart';
+import 'package:e_commerce/features/shop/screens/all_brands/brand_products.dart';
 import 'package:e_commerce/features/shop/screens/store/screens/widgets/category_tab.dart';
 import 'package:e_commerce/features/shop/screens/store/screens/widgets/store_primary_header.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
@@ -68,6 +69,7 @@ class StoreScreen extends StatelessWidget {
                                   }
 
                                   final brands = brandController.featuredBrands;
+
                                   return ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     separatorBuilder: (context, index) =>
@@ -76,6 +78,15 @@ class StoreScreen extends StatelessWidget {
                                     itemBuilder: (context, index) => SizedBox(
                                       width: USizes.brandCardWidth,
                                       child: UBrandCard(
+                                        onTap: () {
+                                          final brand = brands[index];
+                                          Get.to(
+                                            () => BrandProductsScreen(
+                                              title: brand.name,
+                                              brand: brand,
+                                            ),
+                                          );
+                                        },
                                         brandModel: brands[index],
                                       ),
                                     ),
@@ -97,7 +108,9 @@ class StoreScreen extends StatelessWidget {
               ];
             },
             body: TabBarView(
-              children: categories.map((category) => UCategoryTab()).toList(),
+              children: categories
+                  .map((category) => UCategoryTab(category: category))
+                  .toList(),
             ),
           ),
         ),

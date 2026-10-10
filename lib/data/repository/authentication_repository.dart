@@ -1,3 +1,4 @@
+import 'package:e_commerce/data/repository/category_repository.dart';
 import 'package:e_commerce/data/repository/product/product_repository.dart';
 import 'package:e_commerce/data/repository/user/user_repository.dart';
 import 'package:e_commerce/dummy_data.dart';
@@ -49,6 +50,11 @@ class AuthenticationRepository extends GetxController {
 
     //
     // Get.put(ProductRepository()).uploadProducts(UDummyData.products);
+    //
+    // Get.put(CategoryRepository()).uploadBrandCategory(UDummyData.brandCategory);
+    // Get.put(
+    //   CategoryRepository(),
+    // ).uploadProductCategory(UDummyData.productCategory);
   }
 
   void screenRedirect() {

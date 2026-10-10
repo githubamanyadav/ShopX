@@ -1,5 +1,5 @@
 import 'package:e_commerce/features/shop/models/banner/banner_model.dart';
-import 'package:e_commerce/features/shop/models/brand_category/brand_categore.dart';
+import 'package:e_commerce/features/shop/models/brand_category/brand_category_model.dart';
 import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
 import 'package:e_commerce/features/shop/models/products/product_attribute.dart';
 import 'package:e_commerce/features/shop/models/products/product_category.dart';

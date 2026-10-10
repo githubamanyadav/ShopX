@@ -1,6 +1,8 @@
 import 'package:e_commerce/data/repository/brand/brand_repository.dart';
+import 'package:e_commerce/data/repository/product/product_repository.dart';
 
 import 'package:e_commerce/features/shop/models/brands/brands_model.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/utils/popups/snackbar_helper.dart';
 
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ class BrandController extends GetxController {
 
   /// Variables
   final _repository = Get.put(BrandRepository());
+  // final _productrepo = Get.put(ProductRepository());
   RxList<BrandModel> allBrands = <BrandModel>[].obs;
   RxList<BrandModel> featuredBrands = <BrandModel>[].obs;
   RxBool isLoading = false.obs;
@@ -35,6 +38,19 @@ class BrandController extends GetxController {
       USnackBarHelpers.errorSnackBar(title: 'Failed!', message: e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  //
+  Future<List<ProductModel>> getBrandProduct(String brandId) async {
+    try {
+      final products = await ProductRepository.instance.getProductsForBrand(
+        brandId: brandId,
+      );
+      return products;
+    } catch (e) {
+      USnackBarHelpers.errorSnackBar(title: 'Failed!', message: e.toString());
+      return [];
     }
   }
 }

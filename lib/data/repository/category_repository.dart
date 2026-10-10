@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/data/services/cloudinary_services.dart';
+import 'package:e_commerce/features/shop/models/brand_category/brand_category_model.dart';
 import 'package:e_commerce/features/shop/models/category_model.dart';
+import 'package:e_commerce/features/shop/models/products/product_category.dart';
+import 'package:e_commerce/features/shop/screens/store/screens/widgets/category_brands.dart';
 
 import 'package:e_commerce/utils/constants/keys.dart';
 import 'package:e_commerce/utils/exception/firebase_exceptions.dart';
@@ -23,7 +26,7 @@ class CategoryRepository extends GetxController {
   final _cloudinaryServices = Get.put(CloudinaryServices());
 
   /// [Upload] - Function to upload list of brand categories
-  Future<void> uploadBrandCategory(List<CategoryModel> brandCategories) async {
+  Future<void> uploadBrand(List<CategoryModel> brandCategories) async {
     try {
       for (final brandCategory in brandCategories) {
         File image = await UHelperFunction.assetToFile(brandCategory.image);
@@ -76,23 +79,50 @@ class CategoryRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-  // /// [Upload] - Function to upload list of brand categories
-  // Future<void> uploadProductCategory(List<ProductCategoryModel> productCategories) async{
-  //   try{
-  //     for(final productCategory in productCategories) {
-  //       await _db.collection(UKeys.productCategoryCollection).doc().set(productCategory.toJson());
-  //     }
 
-  //   } on FirebaseException catch(e){
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch(_){
-  //     throw UFormatException();
-  //   } on PlatformException catch(e){
-  //     throw UPlatformException(e.code).message;
-  //   } catch(e){
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+  // /// [Upload] - Function to upload list of product categories
+  Future<void> uploadProductCategory(
+    List<ProductCategoryModel> productCategories,
+  ) async {
+    try {
+      for (final productCategory in productCategories) {
+        await _db
+            .collection(Ukeys.productCategoryCollection)
+            .doc()
+            .set(productCategory.toJson());
+      }
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  // /// [Upload] - Function to upload list of brand categories
+  Future<void> uploadBrandCategory(
+    List<BrandCategoryModel> BrandCategories,
+  ) async {
+    try {
+      for (final brandCategory in BrandCategories) {
+        await _db
+            .collection(Ukeys.brandCategoryCollection)
+            .doc()
+            .set(brandCategory.toJson());
+      }
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   // /// [UploadCategory] - Function to upload list of categories
   // Future<void> uploadCategories(List<CategoryModel> categories) async{

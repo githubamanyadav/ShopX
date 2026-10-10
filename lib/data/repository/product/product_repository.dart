@@ -228,41 +228,41 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // /// [Fetch] - Function to fetch all list of brand specific products
-  // Future<List<ProductModel>> getProductsForBrand({
-  //   required String brandId,
-  //   int limit = -1,
-  // }) async {
-  //   try {
-  //     final query = limit == -1
-  //         ? await _db
-  //               .collection(UKeys.productsCollection)
-  //               .where('brand.id', isEqualTo: brandId)
-  //               .get()
-  //         : await _db
-  //               .collection(UKeys.productsCollection)
-  //               .where('brand.id', isEqualTo: brandId)
-  //               .limit(limit)
-  //               .get();
+  /// [Fetch] - Function to fetch all list of brand specific products
+  Future<List<ProductModel>> getProductsForBrand({
+    required String brandId,
+    int limit = -1,
+  }) async {
+    try {
+      final query = limit == -1
+          ? await _db
+                .collection(Ukeys.productsCollection)
+                .where('brand.id', isEqualTo: brandId)
+                .get()
+          : await _db
+                .collection(Ukeys.productsCollection)
+                .where('brand.id', isEqualTo: brandId)
+                .limit(limit)
+                .get();
 
-  //     if (query.docs.isNotEmpty) {
-  //       List<ProductModel> products = query.docs
-  //           .map((document) => ProductModel.fromSnapshot(document))
-  //           .toList();
-  //       return products;
-  //     }
+      if (query.docs.isNotEmpty) {
+        List<ProductModel> products = query.docs
+            .map((document) => ProductModel.fromSnapshot(document))
+            .toList();
+        return products;
+      }
 
-  //     return [];
-  //   } on FirebaseException catch (e) {
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch (_) {
-  //     throw UFormatException();
-  //   } on PlatformException catch (e) {
-  //     throw UPlatformException(e.code).message;
-  //   } catch (e) {
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+      return [];
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   // /// [Fetch] - Function to fetch all list of category specific products
   // Future<List<ProductModel>> getProductsForCategory({

@@ -6,13 +6,13 @@ class UGridLayout extends StatelessWidget {
   const UGridLayout({
     super.key,
     required this.itemCount,
-    this.mainAxisExtent = 295,
     required this.itemBuilder,
+    this.mainAxisExtent = 268,
   });
 
   final int itemCount;
+  final Widget? Function(BuildContext, int) itemBuilder;
   final double? mainAxisExtent;
-  final Widget Function(BuildContext context, int index) itemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class UGridLayout extends StatelessWidget {
       padding: EdgeInsets.zero,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: USizes.gridViewSpacing,
         mainAxisSpacing: USizes.gridViewSpacing,
+        crossAxisSpacing: USizes.gridViewSpacing,
         mainAxisExtent: mainAxisExtent,
       ),
       itemBuilder: itemBuilder,

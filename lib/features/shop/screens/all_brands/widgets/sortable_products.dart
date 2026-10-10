@@ -5,6 +5,7 @@ import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
 import 'package:iconsax/iconsax.dart';
 
 class USortableProducts extends StatelessWidget {
@@ -14,7 +15,7 @@ class USortableProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = AllProductsController.instance;
+    final controller = Get.put(AllProductsController());
     controller.assignProducts(product);
     return Column(
       children: [

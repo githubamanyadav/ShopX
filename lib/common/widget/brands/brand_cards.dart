@@ -26,7 +26,6 @@ class UBrandCard extends StatelessWidget {
       child: SizedBox(
         width: 200, // <-- fixed width fixes the unbounded-constraint crash
         child: URoundedContainer(
-          height: USizes.brandCardHeight,
           showBorder: showBorder,
           padding: EdgeInsets.all(USizes.sm),
           backgroundColor: Colors.transparent,

@@ -1,7 +1,4 @@
-import 'package:e_commerce/data/repository/category_repository.dart';
-import 'package:e_commerce/data/repository/product/product_repository.dart';
 import 'package:e_commerce/data/repository/user/user_repository.dart';
-import 'package:e_commerce/dummy_data.dart';
 
 import 'package:e_commerce/features/authentication/screens/login/login_screen.dart';
 import 'package:e_commerce/features/authentication/screens/onboarding/on_boarding.dart';
@@ -57,12 +54,15 @@ class AuthenticationRepository extends GetxController {
     // ).uploadProductCategory(UDummyData.productCategory);
   }
 
-  void screenRedirect() {
+  void screenRedirect() async {
     final user = _auth.currentUser;
 
     if (user != null) {
       if (user.emailVerified) {
         Get.offAll(() => NavigationMenu());
+
+        //for fav
+        await GetStorage.init(user.uid);
       } else {
         Get.offAll(() => EmailVerifyScreen());
       }

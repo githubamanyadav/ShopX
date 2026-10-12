@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:iconsax/iconsax.dart';
 import '../../utils/constants/colors.dart';
 
@@ -25,6 +26,26 @@ class USnackBarHelpers {
     Get.snackbar(
       title,
       message,
+      isDismissible: true,
+      shouldIconPulse: true,
+      colorText: UColors.white,
+      backgroundColor: UColors.primary,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: duration),
+      margin: const EdgeInsets.all(10),
+      icon: const Icon(Iconsax.tick_circle, color: UColors.white),
+    );
+  }
+
+  static void customToast({required String message, int duration = 3}) {
+    Get.snackbar(
+      '',
+      '',
+      titleText: const SizedBox.shrink(),
+      messageText: Text(
+        message,
+        style: const TextStyle(color: UColors.white, fontSize: 14),
+      ),
       isDismissible: true,
       shouldIconPulse: true,
       colorText: UColors.white,

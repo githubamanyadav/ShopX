@@ -1,5 +1,7 @@
 import 'package:e_commerce/data/repository/category_repository.dart';
+import 'package:e_commerce/data/repository/product/product_repository.dart';
 import 'package:e_commerce/features/shop/models/category_model.dart';
+import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/utils/popups/snackbar_helper.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +45,22 @@ class CategoryController extends GetxController {
     } finally {
       // Remove loader
       isCategoriesLoading.value = false;
+    }
+  }
+
+  /// Function to get all productrs realted to category
+  Future<List<ProductModel>> fetchCategoryProducts(
+    String cateogoryId, {
+    int limit = 4,
+  }) async {
+    try {
+      // Fetch categories from the repository
+      List<ProductModel> categories = await ProductRepository.instance
+          .getProductsForCategory(categoryId: cateogoryId, limit: limit);
+      return categories;
+    } catch (e) {
+      USnackBarHelpers.errorSnackBar(title: 'Failed!', message: e.toString());
+      return [];
     }
   }
 }

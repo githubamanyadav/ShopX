@@ -1,7 +1,8 @@
 import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
-import 'package:e_commerce/common/widget/brands/brand_cards.dart';
+
 import 'package:e_commerce/common/widget/icon/circular_icon.dart';
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
+import 'package:e_commerce/common/widget/products/favourites/favourite_icon.dart';
 import 'package:e_commerce/common/widget/text/brand_title_with_verification_icon.dart';
 import 'package:e_commerce/common/widget/text/product_price_text.dart';
 import 'package:e_commerce/common/widget/text/product_text_title.dart';
@@ -10,7 +11,7 @@ import 'package:e_commerce/utils/constants/images.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/routes/route_middleware.dart';
+
 import 'package:iconsax/iconsax.dart';
 
 class UProductHorizontalCard extends StatelessWidget {
@@ -73,7 +74,7 @@ class UProductHorizontalCard extends StatelessWidget {
                 Positioned(
                   right: -5,
                   top: 0,
-                  child: UCircularIcon(icon: Iconsax.heart5, color: Colors.red),
+                  child: UFavouriteIcon(productId: ''),
                 ),
               ],
             ),

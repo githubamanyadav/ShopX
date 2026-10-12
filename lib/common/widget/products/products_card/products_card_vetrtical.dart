@@ -2,6 +2,7 @@ import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/style/shadow.dart';
 import 'package:e_commerce/common/widget/icon/circular_icon.dart';
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
+import 'package:e_commerce/common/widget/products/favourites/favourite_icon.dart';
 import 'package:e_commerce/common/widget/text/brand_title_with_verification_icon.dart';
 import 'package:e_commerce/common/widget/text/product_price_text.dart';
 import 'package:e_commerce/common/widget/text/product_text_title.dart';
@@ -77,10 +78,7 @@ class UProductsCardVetrtical extends StatelessWidget {
                   Positioned(
                     right: -5,
                     top: 0,
-                    child: UCircularIcon(
-                      icon: Iconsax.heart5,
-                      color: Colors.red,
-                    ),
+                    child: UFavouriteIcon(productId: product.id),
                   ),
                 ],
               ),

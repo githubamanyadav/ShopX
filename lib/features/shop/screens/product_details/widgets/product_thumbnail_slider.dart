@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce/common/widget/appbar/app_bar.dart';
 import 'package:e_commerce/common/widget/icon/circular_icon.dart';
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
+import 'package:e_commerce/common/widget/products/favourites/favourite_icon.dart';
 import 'package:e_commerce/features/shop/controller/product/image_controller.dart';
 import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
@@ -92,7 +93,7 @@ class UProductThumbnailAndSlider extends StatelessWidget {
         //arrow navigation & fav button
         UAppBar(
           showArrowBack: true,
-          actions: [UCircularIcon(icon: Iconsax.heart5, color: Colors.red)],
+          actions: [UFavouriteIcon(productId: product.id)],
         ),
       ],
     );

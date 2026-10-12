@@ -1,6 +1,7 @@
 import 'package:e_commerce/features/personalization/screens/profile.dart';
 import 'package:e_commerce/features/shop/screens/home/home.dart';
-import 'package:e_commerce/features/shop/screens/store/screens/store.dart';
+import 'package:e_commerce/features/shop/screens/store/screens/widgets/store.dart';
+
 import 'package:e_commerce/features/shop/screens/wishlist/wishlist.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';

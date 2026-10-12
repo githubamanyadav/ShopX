@@ -6,7 +6,8 @@ import 'package:e_commerce/features/personalization/screens/address/add_new_adre
 import 'package:e_commerce/features/personalization/screens/edit%20profile/edit_profile.dart';
 import 'package:e_commerce/features/personalization/screens/profile.dart';
 import 'package:e_commerce/features/shop/screens/order/orders.dart';
-import 'package:e_commerce/features/shop/screens/store/screens/store.dart';
+import 'package:e_commerce/features/shop/screens/store/screens/widgets/store.dart';
+
 import 'package:e_commerce/features/shop/screens/wishlist/wishlist.dart';
 import 'package:e_commerce/navigation_menu.dart';
 import 'package:e_commerce/routes/routes.dart';

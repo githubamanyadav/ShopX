@@ -264,74 +264,74 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // /// [Fetch] - Function to fetch all list of category specific products
-  // Future<List<ProductModel>> getProductsForCategory({
-  //   required String categoryId,
-  //   int limit = 4,
-  // }) async {
-  //   try {
-  //     final productCategoryQuery = limit == -1
-  //         ? await _db
-  //               .collection(UKeys.productCategoryCollection)
-  //               .where('categoryId', isEqualTo: categoryId)
-  //               .get()
-  //         : await _db
-  //               .collection(UKeys.productCategoryCollection)
-  //               .where('categoryId', isEqualTo: categoryId)
-  //               .limit(limit)
-  //               .get();
+  /// [Fetch] - Function to fetch all list of category specific products
+  ///
+  Future<List<ProductModel>> getProductsForCategory({
+    required String categoryId,
+    int limit = 4,
+  }) async {
+    try {
+      final productCategoryQuery = limit == -1
+          ? await _db
+                .collection(Ukeys.productCategoryCollection)
+                .where('categoryId', isEqualTo: categoryId)
+                .get()
+          : await _db
+                .collection(Ukeys.productCategoryCollection)
+                .where('categoryId', isEqualTo: categoryId)
+                .limit(limit)
+                .get();
 
-  //     List<String> productIds = productCategoryQuery.docs
-  //         .map((doc) => doc['productId'] as String)
-  //         .toList();
+      List<String> productIds = productCategoryQuery.docs
+          .map((doc) => doc['productId'] as String)
+          .toList();
 
-  //     final productQuery = await _db
-  //         .collection(UKeys.productsCollection)
-  //         .where(FieldPath.documentId, whereIn: productIds)
-  //         .get();
+      final productQuery = await _db
+          .collection(Ukeys.productsCollection)
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
 
-  //     List<ProductModel> products = productQuery.docs
-  //         .map((doc) => ProductModel.fromSnapshot(doc))
-  //         .toList();
+      List<ProductModel> products = productQuery.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
+      return products;
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
-  //     return products;
-  //   } on FirebaseException catch (e) {
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch (_) {
-  //     throw UFormatException();
-  //   } on PlatformException catch (e) {
-  //     throw UPlatformException(e.code).message;
-  //   } catch (e) {
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+  /// [Fetch] - Function to fetch list of favourite products from Firebase
+  Future<List<ProductModel>> getFavouriteProducts(
+    List<String> productsIds,
+  ) async {
+    try {
+      final query = await _db
+          .collection(Ukeys.productsCollection)
+          .where(FieldPath.documentId, whereIn: productsIds)
+          .get();
 
-  // /// [Fetch] - Function to fetch list of favourite products from Firebase
-  // Future<List<ProductModel>> getFavouriteProducts(
-  //   List<String> productsIds,
-  // ) async {
-  //   try {
-  //     final query = await _db
-  //         .collection(UKeys.productsCollection)
-  //         .where(FieldPath.documentId, whereIn: productsIds)
-  //         .get();
+      if (query.docs.isNotEmpty) {
+        List<ProductModel> products = query.docs
+            .map((document) => ProductModel.fromSnapshot(document))
+            .toList();
+        return products;
+      }
 
-  //     if (query.docs.isNotEmpty) {
-  //       List<ProductModel> products = query.docs
-  //           .map((document) => ProductModel.fromSnapshot(document))
-  //           .toList();
-  //       return products;
-  //     }
-
-  //     return [];
-  //   } on FirebaseException catch (e) {
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch (_) {
-  //     throw UFormatException();
-  //   } on PlatformException catch (e) {
-  //     throw UPlatformException(e.code).message;
-  //   } catch (e) {
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+      return [];
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

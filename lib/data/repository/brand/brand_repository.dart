@@ -103,7 +103,7 @@ class BrandRepository extends GetxController {
       final brandsQuery = await _db
           .collection(Ukeys.brandsCollection)
           .where(FieldPath.documentId, whereIn: brandIds)
-          .limit(2)
+          .limit(3)
           .get();
 
       // convert documents to model

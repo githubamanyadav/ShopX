@@ -48,13 +48,13 @@ class UHomeCategories extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  CategoryModel model = categories[index];
+                  CategoryModel category = categories[index];
                   return UVerticalImage(
                     onTap: () {
-                      Get.to(() => SubCategories());
+                      Get.to(() => SubCategories(category: category));
                     },
-                    image: model.image,
-                    title: model.name,
+                    image: category.image,
+                    title: category.name,
                     textColor: UColors.white,
                   );
                 },

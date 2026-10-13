@@ -14,6 +14,7 @@ class FavouriteController extends GetxController {
   /// Variables
 
   final favourites = <String, bool>{}.obs;
+  //this will create local stroage according to the name of the user id & each different user in the same device will get the diff local storage to keep the sepration from each other
   final _storage = GetStorage(
     AuthenticationRepository.instance.currentUser!.uid,
   );
@@ -30,10 +31,15 @@ class FavouriteController extends GetxController {
 
     if (json != null) {
       final storedFavourites = jsonDecode(json) as Map<String, dynamic>;
-      _storage.remove('');
-      favourites.assignAll(
+      //removing the empty value in the map and give a
+      final cleaned = Map<String, bool>.from(
         storedFavourites.map((key, value) => MapEntry(key, value as bool)),
-      );
+      )..removeWhere((key, value) => key.isEmpty); // 🔑 remove bad entries
+
+      favourites.assignAll(cleaned);
+
+      // Persist the cleaned version back so it doesn't keep loading garbage
+      saveFavouritesToStorage();
     }
   }
 
@@ -56,7 +62,9 @@ class FavouriteController extends GetxController {
     } else {
       favourites.remove(productId);
       saveFavouritesToStorage();
-      USnackBarHelpers.customToast(message: " prodcut added to the wishlist");
+      USnackBarHelpers.customToast(
+        message: " prodcut removed from the wishlist",
+      );
       favourites.refresh();
       // Optional: show a "Removed from wishlist" message here
     }
@@ -64,6 +72,7 @@ class FavouriteController extends GetxController {
 
   /// Save the current favourites map to local storage
   void saveFavouritesToStorage() {
+    //convert favourite Map() into a json format to save the json data into storage
     final encodedFavourites = jsonEncode(favourites);
     _storage.write('favourites', encodedFavourites);
   }
@@ -71,6 +80,7 @@ class FavouriteController extends GetxController {
   //to get all the favourite products from the firebase
   Future<List<ProductModel>> getFavouriteProducts() async {
     final productIds = favourites.keys.toList();
+    if (productIds.isEmpty) return [];
     return await ProductRepository.instance.getFavouriteProducts(productIds);
   }
 }

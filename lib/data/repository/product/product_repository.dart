@@ -315,11 +315,11 @@ class ProductRepository extends GetxController {
           .collection(Ukeys.productsCollection)
           .where(FieldPath.documentId, whereIn: productsIds)
           .get();
-
       if (query.docs.isNotEmpty) {
         List<ProductModel> products = query.docs
             .map((document) => ProductModel.fromSnapshot(document))
             .toList();
+        print('Docs returned: ${query.docs.length}');
         return products;
       }
 

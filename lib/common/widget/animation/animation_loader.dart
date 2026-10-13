@@ -1,3 +1,4 @@
+import 'package:e_commerce/utils/constants/colors.dart';
 import 'package:e_commerce/utils/constants/images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,9 +6,20 @@ import 'package:lottie/lottie.dart';
 import '../../../utils/constants/sizes.dart';
 
 class UAnimationLoader extends StatelessWidget {
-  final String text;
+  const UAnimationLoader({
+    super.key,
+    required this.text,
+    this.animation = UImages.loadingAnimation,
+    this.showActionButton = false,
+    this.actionText,
+    this.onActionPressed,
+  });
 
-  const UAnimationLoader({super.key, required this.text});
+  final String text;
+  final String animation;
+  final bool showActionButton;
+  final String? actionText;
+  final VoidCallback? onActionPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +28,7 @@ class UAnimationLoader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           /// Animation
-          Lottie.asset(UImages.loadingAnimation, width: Get.width * 0.8),
+          Lottie.asset(animation, width: Get.width * 0.8),
           const SizedBox(height: USizes.defaultSpace),
 
           /// Title
@@ -26,8 +38,24 @@ class UAnimationLoader extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: USizes.defaultSpace),
-        ], // Column
-      ), // Center
+
+          /// Button
+          if (showActionButton)
+            SizedBox(
+              width: 250,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(backgroundColor: UColors.dark),
+                onPressed: onActionPressed,
+                child: Text(
+                  actionText ?? '',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium!.apply(color: UColors.light),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

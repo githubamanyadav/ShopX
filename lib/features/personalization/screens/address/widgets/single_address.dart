@@ -1,4 +1,5 @@
 import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
+import 'package:e_commerce/features/personalization/models/address/address_model.dart';
 import 'package:e_commerce/utils/constants/colors.dart';
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';
@@ -6,9 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class USingleAddress extends StatelessWidget {
-  const USingleAddress({super.key, required this.isSelected});
+  const USingleAddress({
+    super.key,
+    required this.isSelected,
+    required this.address,
+  });
 
   final bool isSelected;
+  final AddressModel address;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,7 @@ class USingleAddress extends StatelessWidget {
 
               /// Phone Number
               Text(
-                '+92 312345678',
+                '+91${address.phoneNumber}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -47,7 +53,7 @@ class USingleAddress extends StatelessWidget {
 
               /// Address
               Text(
-                'House No.295, Hyderabad, Sindh, Pakistan',
+                address.toString(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

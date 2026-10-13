@@ -5,7 +5,6 @@ import 'package:e_commerce/data/services/cloudinary_services.dart';
 import 'package:e_commerce/features/shop/models/brand_category/brand_category_model.dart';
 import 'package:e_commerce/features/shop/models/category_model.dart';
 import 'package:e_commerce/features/shop/models/products/product_category.dart';
-import 'package:e_commerce/features/shop/screens/store/screens/widgets/category_brands.dart';
 
 import 'package:e_commerce/utils/constants/keys.dart';
 import 'package:e_commerce/utils/exception/firebase_exceptions.dart';
@@ -151,26 +150,29 @@ class CategoryRepository extends GetxController {
   // }
 
   // /// [FetchSubCategories] - Function to fetch list of sub categories
-  // Future<List<CategoryModel>> getSubCategories(String categoryId) async{
-  //   try{
+  Future<List<CategoryModel>> getSubCategories(String categoryId) async {
+    try {
+      final query = await _db
+          .collection(Ukeys.categoryCollection)
+          .where('parentId', isEqualTo: categoryId)
+          .get();
 
-  //     final query = await _db.collection(UKeys.categoryCollection).where('parentId', isEqualTo: categoryId).get();
+      if (query.docs.isNotEmpty) {
+        List<CategoryModel> categories = query.docs
+            .map((document) => CategoryModel.fromSnapshot(document))
+            .toList();
+        return categories;
+      }
 
-  //     if(query.docs.isNotEmpty){
-  //       List<CategoryModel> categories = query.docs.map((document) => CategoryModel.fromSnapshot(document)).toList();
-  //       return categories;
-  //     }
-
-  //     return [];
-
-  //   }on FirebaseException catch(e){
-  //     throw UFirebaseException(e.code).message;
-  //   } on FormatException catch(_){
-  //     throw UFormatException();
-  //   } on PlatformException catch(e){
-  //     throw UPlatformException(e.code).message;
-  //   } catch(e){
-  //     throw 'Something went wrong. Please try again';
-  //   }
-  // }
+      return [];
+    } on FirebaseException catch (e) {
+      throw UFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw UFormatException();
+    } on PlatformException catch (e) {
+      throw UPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

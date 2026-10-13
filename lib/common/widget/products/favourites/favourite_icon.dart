@@ -11,7 +11,9 @@ class UFavouriteIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(FavouriteController());
+    final controller = Get.isRegistered<FavouriteController>()
+        ? Get.find<FavouriteController>()
+        : Get.put(FavouriteController());
     return Obx(
       () => UCircularIcon(
         icon: controller.isFavourite(productId)

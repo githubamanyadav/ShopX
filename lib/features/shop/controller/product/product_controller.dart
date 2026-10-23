@@ -48,7 +48,7 @@ class ProductController extends GetxController {
 
     double percentage = ((originalPrice - salePrice) / originalPrice) * 100;
 
-    return percentage.toStringAsFixed(1);
+    return percentage.toStringAsFixed(0);
   }
 
   /// Get the product price or price range for variations

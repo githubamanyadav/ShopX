@@ -1,12 +1,13 @@
 import 'package:e_commerce/common/custom_shapes/clipper/rounded_container.dart';
 import 'package:e_commerce/common/style/shadow.dart';
-import 'package:e_commerce/common/widget/icon/circular_icon.dart';
+import 'package:e_commerce/common/widget/button/add_to_cart_button.dart';
+
 import 'package:e_commerce/common/widget/images/rounded_images.dart';
 import 'package:e_commerce/common/widget/products/favourites/favourite_icon.dart';
 import 'package:e_commerce/common/widget/text/brand_title_with_verification_icon.dart';
 import 'package:e_commerce/common/widget/text/product_price_text.dart';
 import 'package:e_commerce/common/widget/text/product_text_title.dart';
-import 'package:e_commerce/features/shop/controller/brands/brands_controller.dart';
+
 import 'package:e_commerce/features/shop/controller/product/product_controller.dart';
 import 'package:e_commerce/features/shop/models/products/products.dart';
 import 'package:e_commerce/features/shop/screens/product_details/product_details.dart';
@@ -15,7 +16,6 @@ import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:e_commerce/utils/helpers/helper_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class UProductsCardVetrtical extends StatelessWidget {
   const UProductsCardVetrtical({super.key, required this.product});
@@ -112,20 +112,7 @@ class UProductsCardVetrtical extends StatelessWidget {
                             lineThrough: false,
                           ),
                         ),
-                        Container(
-                          height: USizes.iconLg * 1.2,
-                          width: USizes.iconLg * 1.2,
-                          decoration: BoxDecoration(
-                            color: UColors.primary,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(USizes.cardRadiusMd),
-                              bottomRight: Radius.circular(
-                                USizes.productImageRadius,
-                              ),
-                            ),
-                          ),
-                          child: Icon(Iconsax.add, color: UColors.white),
-                        ),
+                        AddToCartButton(product: product),
                       ],
                     ),
                   ],

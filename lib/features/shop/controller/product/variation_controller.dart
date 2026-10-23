@@ -1,3 +1,4 @@
+import 'package:e_commerce/features/shop/controller/cart_system/cart_controller.dart';
 import 'package:e_commerce/features/shop/controller/product/image_controller.dart';
 import 'package:e_commerce/features/shop/models/products/product_variation.dart';
 import 'package:e_commerce/features/shop/models/products/products.dart';
@@ -40,6 +41,13 @@ class VariationController extends GetxController {
     if (selectedVariation.image.isNotEmpty) {
       ImagesController.instance.selectedProductImage.value =
           selectedVariation.image;
+    }
+
+    //
+    if (selectedVariation.id.isNotEmpty) {
+      final cartController = CartController.instance;
+      cartController.productQuantityInCart.value = cartController
+          .getVaraitionQuantityInCart(product.id, selectedVariation.id);
     }
 
     // Assign selected Variation to Rx Variable
@@ -96,5 +104,12 @@ class VariationController extends GetxController {
             ? selectedVariation.value.salePrice
             : selectedVariation.value.price)
         .toString();
+  }
+
+  //reset  selected attrributes  when switching products
+  void resetSelectedAttributes() {
+    selectedAttributes.clear();
+    variationStockStatus.value = '';
+    selectedVariation.value = ProductVariationModel.empty();
   }
 }

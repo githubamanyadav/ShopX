@@ -71,7 +71,9 @@ class UProductAttributes extends StatelessWidget {
                                 smallSize: true,
                               ),
                               Text(
-                                'In Stock',
+                                controller.selectedVariation.value.stock == 0
+                                    ? "Out of stock"
+                                    : "In Stock",
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ],

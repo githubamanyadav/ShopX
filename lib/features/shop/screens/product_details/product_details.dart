@@ -78,7 +78,7 @@ class ProductDetailScreen extends StatelessWidget {
         ), // Column
       ), // SingleChildScrollView
       /// -----[Bottom Navigation]-----
-      bottomNavigationBar: UBottomAddToCart(),
+      bottomNavigationBar: UBottomAddToCart(product: product),
     ); // Scaffold
   }
 }

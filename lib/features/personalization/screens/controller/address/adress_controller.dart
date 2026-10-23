@@ -62,7 +62,7 @@ class AddressController extends GetxController {
         message: "your address has been saved successfully",
       );
       resetFormFields();
-      Get.back();
+      Get.back(); 
     } catch (e) {
       // Stop the loader and show the error
       UFullScreenLoader.stopLoading();

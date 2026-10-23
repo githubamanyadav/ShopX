@@ -5,13 +5,11 @@ import 'package:e_commerce/common/widget/textfields/search_bar.dart';
 import 'package:e_commerce/features/shop/controller/home/home_controller.dart';
 import 'package:e_commerce/features/shop/controller/product/product_controller.dart';
 import 'package:e_commerce/features/shop/models/products/products.dart';
-
 import 'package:e_commerce/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/home_app_bar.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/primary_header_container.dart';
 import 'package:e_commerce/features/shop/screens/home/widgets/product_card_vertical.dart';
-
 import 'package:e_commerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +21,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // the
     final controller = Get.put(HomeController());
+
     final productController = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(

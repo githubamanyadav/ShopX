@@ -6,7 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UProductWithAddButton extends StatelessWidget {
-  const UProductWithAddButton({super.key});
+  const UProductWithAddButton({
+    super.key,
+    required this.quantity,
+    this.add,
+    this.remove,
+  });
+  final int quantity;
+  final VoidCallback? add, remove;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +22,7 @@ class UProductWithAddButton extends StatelessWidget {
       children: [
         SizedBox(width: 70),
         UCircularIcon(
+          onPressed: remove,
           height: 32,
           width: 32,
           size: USizes.iconSm,
@@ -23,9 +31,13 @@ class UProductWithAddButton extends StatelessWidget {
           color: dark ? UColors.white : UColors.black,
         ),
         SizedBox(width: USizes.spaceBtwItems),
-        Text("2", style: Theme.of(context).textTheme.titleSmall),
+        Text(
+          quantity.toString(),
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         SizedBox(width: USizes.spaceBtwItems),
         UCircularIcon(
+          onPressed: add,
           height: 32,
           width: 32,
           size: USizes.iconSm,
